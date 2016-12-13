@@ -1,0 +1,48 @@
+
+texture.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 1, 183
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+dalej
+  rotate: false
+  xy: 30, 62
+  size: 160, 125
+  orig: 160, 125
+  offset: 0, 0
+  index: -1
+ramka
+  rotate: false
+  xy: 1283, 843
+  size: 110, 60
+  orig: 110, 60
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 1, 1
+  size: 46, 53
+  orig: 46, 53
+  offset: 0, 0
+  index: -1
+ramka1
+  rotate: false
+  xy: 230, 58
+  size: 135, 90
+  orig: 135, 90
+  offset: 0, 0
+  index: -1
+ramka2
+  rotate: false
+  xy: 405, 58
+  size: 190, 120
+  orig: 190, 120
+  offset: 0, 0
+  index: -1
+
