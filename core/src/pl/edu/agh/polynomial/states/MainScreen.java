@@ -43,7 +43,7 @@ public class MainScreen extends State {
 
     private Label[] potegi;
 
-    private Label[] x;
+    private Label[] xi;
 
     private Label[] znak;
 
@@ -74,7 +74,7 @@ public class MainScreen extends State {
 
 
 
-        x = new Label[stopienWielomianu+1];
+        xi = new Label[stopienWielomianu+1];
         znak = new Label[stopienWielomianu+1];
         potegi = new Label[stopienWielomianu+1];
 
@@ -84,7 +84,7 @@ public class MainScreen extends State {
             if(i==stopienWielomianu) wspolczynnik.setMessageText("0");
             int h = i / 5;
             int w = i % 5;
-            wspolczynnik.setPosition(190*w+10,upY(h*65+150));
+            wspolczynnik.setPosition(190*w+10,upY(h*75+150));
             wspolczynnik.setAlignment(Align.center);
             wspolczynnik.setMaxLength(3);
             wspolczynniki.add(wspolczynnik);
@@ -120,22 +120,22 @@ public class MainScreen extends State {
             potegi[i] = new Label(pot, new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , potegi[i].getText());
             potegi[i].setFontScale(0.5f);
-            potegi[i].setPosition(190*w+wspolczynnik.getWidth()/2+80,upY(h*65+130));
+            potegi[i].setPosition(190*w+wspolczynnik.getWidth()/2+80,upY(h*75+130));
 
             String pisz;
             if(stopienWielomianu-i != 0) pisz = "x";
             else pisz = " ";
-            x[i] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
-            layout.setText(sofiaProSoftMedium46px , x[i].getText());
-            x[i].setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*65+150) );
+            xi[i] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+            layout.setText(sofiaProSoftMedium46px , xi[i].getText());
+            xi[i].setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*75+150) );
 
             znak[i]=new Label("+", new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , znak[i].getText());
-            znak[i].setPosition( 190*w+wspolczynnik.getWidth()/2-60,upY(h*65+150) );
+            znak[i].setPosition( 190*w+wspolczynnik.getWidth()/2-60,upY(h*75+150) );
             if (i==0) znak[i].setText("");
             if(i==stopienWielomianu){
                 layout.setText(sofiaProSoftMedium46px , zero.getText());
-                zero.setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*65+150));
+                zero.setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*75+150));
             }
         }
 
@@ -146,7 +146,7 @@ public class MainScreen extends State {
         }
 
 
-        for(Label i:x){
+        for(Label i:xi){
             addActor(i);
         }
         for(Label i:potegi){
@@ -159,7 +159,10 @@ public class MainScreen extends State {
         addActor(zero);
 
         dalej=new Image(Polynomial.skin.getDrawable("dalej"));
-        dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,0);
+        int miejsce;
+        if(stopienWielomianu>=22) miejsce=-30;
+        else miejsce =0;
+        dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,miejsce);
         addActor(dalej);
 
 
@@ -216,7 +219,20 @@ public class MainScreen extends State {
                 blad2.setVisible(true);
                 }
             else blad2.setVisible(false);
-            if(flag==0&&dane[0]!=0.0) startEndAnimationAndPushNewState(new MenuScreen(gsm));
+            if(flag==0&&dane[0]!=0.0) {
+
+                for(int i = dlugosc; i>=0; i--){
+                   wspolczynniki.get(i).setText("");
+                    wspolczynniki.get(i).setVisible(false);
+                    znak[i].setText("");
+                    potegi[i].setText("");
+                    xi[i].setText("");
+                    }
+                    addActor(bg);
+                startEndAnimationAndPushNewState(new MenuScreen(gsm));
+                }
+
+
 
         }
 
