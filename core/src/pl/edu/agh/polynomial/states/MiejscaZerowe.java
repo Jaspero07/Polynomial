@@ -1,8 +1,14 @@
 package pl.edu.agh.polynomial.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+
+import pl.edu.agh.polynomial.Polynomial;
 
 import static pl.edu.agh.polynomial.Polynomial.skin;
 
@@ -16,6 +22,10 @@ public class MiejscaZerowe extends State {
     private Image bg;
     private static Complex roots[];
     private static Complex droots[];
+    private Label showRoots[] , title;
+    private BitmapFont sofiaProSoftMedium34px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium34px.fnt"));
+    private BitmapFont sofiaProSoftMedium46px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium46px.fnt"));
+    private Image wstecz;
 
     public static Complex[] getRoots() {
         return roots;
@@ -149,12 +159,20 @@ public class MiejscaZerowe extends State {
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
         licz();
-        for (Complex c : droots) {
-            System.out.println(c.getReal() + "   " + c.getImaginary() + "i");
-        }
-
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
+        title = new Label("Miejsca zerowe" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+        title.setPosition(20 , upY(60));
+        addActor(title);
+        showRoots = new Label[roots.length];
+        for(int i=0 ; i<showRoots.length ; i++){
+            showRoots[i] = new Label(""+Math.round(MiejscaZerowe.getRoots()[i].getReal()*100.0)/100.0+"   "+Math.round(MiejscaZerowe.getRoots()[i].getImaginary()*100.0)/100.0+"i" , new Label.LabelStyle(sofiaProSoftMedium34px , Color.BLACK));
+            showRoots[i].setPosition(30+270*(i/8) , upY(100+(i%8)*40));
+            addActor(showRoots[i]);
+        }
+        wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
+        wstecz.setPosition(0,0);
+        addActor(wstecz);
     }
 
     private static double[] countDerive(double poly[]) {
@@ -167,7 +185,10 @@ public class MiejscaZerowe extends State {
 
     @Override
     public void handleInput(float x, float y) {
+        if((x-wstecz.getX()-wstecz.getWidth()/2)*(x-wstecz.getX()-wstecz.getWidth()/2) + (y-upY((int)wstecz.getY())+wstecz.getHeight()/2)*(y-upY((int)wstecz.getY())+wstecz.getHeight()/2) < wstecz.getWidth()/2*wstecz.getWidth()/2) {
 
+            startEndAnimationAndPopState();
+        }
     }
 
     @Override
